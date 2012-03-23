@@ -1,5 +1,4 @@
 import java.util.*;
-import java.util.concurrent.*;
 
 public class Tree {
 
@@ -70,14 +69,15 @@ public class Tree {
 		
 		ArrayList<Integer> traversalResult = new ArrayList<Integer>();
 
-		MyCallableClass runner = new MyCallableClass(this.root);
-		
+		// Start
+		MyCallableClass runner = new MyCallableClass(this.root);		
 		try{
 			traversalResult = (ArrayList<Integer>) runner.call();
 		}
 		catch(Exception e){
 		}
 		
+		// Shutdown executor
 		MyCallableClass.executor.shutdown();
 		
 		//System.out.println("Exit: parallel DFS traverse");		

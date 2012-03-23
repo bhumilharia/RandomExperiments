@@ -2,18 +2,17 @@
  * @author Bhumil Haria
  *
  */
-
-import java.awt.List;
 import java.util.ArrayList;
-import java.util.concurrent.*;
 
 public class Main {
 
 	/**
-	 * @param args
+	 * @param args None 
 	 */
 	public static void main(String[] args) {
 		
+		// Creating a binary tree
+		// Test data
 		ArrayList<Integer> list = new ArrayList<Integer>();
 		list.add(10);
 		list.add(5);
@@ -29,6 +28,7 @@ public class Main {
 		Tree tree = new Tree();
 		tree.buildBinaryTree(list);
 		
+		// Running multiple times for verification (to check if parallelism affects order of the output) 
 		for(int i = 1; i< 11; i++){
 			ArrayList<Integer> dfsTraversal = tree.parallelDFSTraverse();
 			System.out.println("Traversal " + i + ": " + dfsTraversal.toString());
