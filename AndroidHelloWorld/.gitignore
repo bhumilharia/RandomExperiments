@@ -1,0 +1,11 @@
+# Files to be ignored in the AndroidHelloWorld project.
+
+# Folders #
+bin/*
+gen/*
+drawable-*/*.png
+
+# Compiled source #
+*.com
+*.class
+

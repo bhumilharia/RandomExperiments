@@ -1,60 +1,79 @@
 import java.util.*;
 
-public class Tree {
+public class Tree<T> {
 
-	private Node root;	
+	/**
+	 * The Node object representing the root node of the tree 
+	 */
+	private Node<T> root;	
 	
+	/**
+	 * Default constructor
+	 */
 	public Tree() {
 		super();
 	}
 
-	public Node getRoot() {
-		return this.root;
+	/**
+	 * Returns the root node of the calling object
+	 * 
+	 * @return The root node
+	 */
+	public Node<T> getRoot() {
+		return root;
 	}
 
-	public void setRoot(Node root) {
-		this.root = root;
+	/**
+	 * Sets the root node of the calling Tree object
+	 * 
+	 * @param treeRoot the node to be set as the root of tree
+	 */
+	public void setRoot(Node<T> treeRoot) {
+		root = treeRoot;
 	}
 
 	public boolean isEmpty() {
 		return (root == null);
 	}
 
-	public Tree buildBinaryTree(ArrayList<Integer> list) {
+	public Tree<T> buildBinaryTree(ArrayList<T> list) {
 		// Creating a BST
 
-		ListIterator<Integer> iter = list.listIterator();
+		ListIterator<T> iter = list.listIterator();
 
 		try {
-			int elem = (Integer) iter.next();
-			Node root = new Node(elem);
-			this.setRoot(root);
-		} catch (Exception e) {
+			T elem = (T) iter.next();
+			Node<T> root = new Node<T>(elem);
+			setRoot(root);
+		} 
+		catch (NoSuchElementException e) {
 			return null;
 		}
 
-		Node parentNode = root;
+		Node<T> parentNode = root;
 
 		while (iter.hasNext()) {
-			int elem = (Integer) iter.next();
+			T elem = (T) iter.next();
 			this.addNode(parentNode, elem);
 		}
 		return this;
 	}
 
-	private void addNode(Node parentNode, int elem) {
+	private void addNode(Node<T> parentNode, T elem) {
 
 		try {
-
-			if (elem < parentNode.getData()) {
+			// This will not work for any type except "int" 
+			// Only writing this for quick prototyping for creating BST with ints.
+			// TODO: change this build method into something generic
+			if ( Integer.parseInt(elem.toString()) <  Integer.parseInt(parentNode.getData().toString())) {
 				if (parentNode.getLeftChild() == null)
-					parentNode.addLeftChild(new Node(elem));
+					parentNode.addLeftChild(new Node<T>(elem));
 				else
 					addNode(parentNode.getLeftChild(), elem);
 			} 
 			else {
 				if (parentNode.getRightChild() == null)
-					parentNode.addRightChild(new Node(elem));
+					parentNode.addRightChild(new Node<T>(elem));
 				else
 					addNode(parentNode.getRightChild(), elem);
 			}
@@ -65,14 +84,16 @@ public class Tree {
 
 	}
 
-	public ArrayList<Integer> parallelDFSTraverse(){
+	public ArrayList<T> parallelDFSTraverse(){
 		
-		ArrayList<Integer> traversalResult = new ArrayList<Integer>();
-
+		ArrayList<T> traversalResult = new ArrayList<T>();
+		
+		// TODO : change name from 'runner' to something better
+		
 		// Start
-		MyCallableClass runner = new MyCallableClass(this.root);		
+		MyCallableClass<T> runner = new MyCallableClass<T>(root);		
 		try{
-			traversalResult = (ArrayList<Integer>) runner.call();
+			traversalResult = (ArrayList<T>) runner.call();
 		}
 		catch(Exception e){
 		}

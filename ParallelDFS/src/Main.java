@@ -1,13 +1,18 @@
 /**
  * @author Bhumil Haria
- *
+ *  
  */
 import java.util.ArrayList;
 
+/** 
+ * @author Bhumil Haria
+ * 
+ * This Main class is a wrapper for running, testing the parallel DFS Traversal algorithm
+ */
 public class Main {
 
 	/**
-	 * @param args None 
+	 * @param args Command-line arguments: None 
 	 */
 	public static void main(String[] args) {
 		
@@ -25,7 +30,7 @@ public class Main {
 		list.add(6);
 		list.add(9);
 		
-		Tree tree = new Tree();
+		Tree<Integer> tree = new Tree<Integer>();
 		tree.buildBinaryTree(list);
 		
 		// Running multiple times for verification (to check if parallelism affects order of the output) 
@@ -36,5 +41,4 @@ public class Main {
 		
 		System.out.println("Exit: main");
 	}
-
 }

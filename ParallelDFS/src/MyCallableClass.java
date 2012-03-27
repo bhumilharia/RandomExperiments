@@ -5,34 +5,36 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 @SuppressWarnings("rawtypes")
-public class MyCallableClass implements Callable {
+public class MyCallableClass<T> implements Callable {
 
-	private Node node;
-	private ArrayList<Integer> traversalResult;
+	private Node<T> node;
+	private ArrayList<T> traversalResult;
 	public static ExecutorService executor;
 
-	public MyCallableClass(Node node) {
+	public MyCallableClass(Node<T> node) {
 		this.node = node;
-		this.traversalResult = new ArrayList<Integer>();
+		this.traversalResult = new ArrayList<T>();
+		
+		// TODO
 		MyCallableClass.executor = Executors.newCachedThreadPool();
 	}
 
 	@Override
 	public Object call() throws Exception {
-		this.traversalResult = auxParallelDFSTraverse(node);
-		return this.traversalResult;
+		traversalResult = auxParallelDFSTraverse(node);
+		return traversalResult;
 	}
 
 	@SuppressWarnings({ "unchecked" })
-	private ArrayList<Integer> auxParallelDFSTraverse(Node node) {
+	private ArrayList<T> auxParallelDFSTraverse(Node<T> node) {
 
 		if (node == null)
-			return new ArrayList<Integer>();
+			return new ArrayList<T>();
 
 		// System.out.println("Entering thread with node: " + node.getData());
 
-		ArrayList<Integer> left = new ArrayList<Integer>();
-		ArrayList<Integer> right = new ArrayList<Integer>();
+		ArrayList<T> left = new ArrayList<T>();
+		ArrayList<T> right = new ArrayList<T>();
 
 		// Left node subtree thread
 		MyCallableClass worker1 = new MyCallableClass(node.getLeftChild());
@@ -44,8 +46,8 @@ public class MyCallableClass implements Callable {
 
 		// Get Left and right subtree traversals
 		try {
-			left = (ArrayList<Integer>) f1.get();
-			right = (ArrayList<Integer>) f2.get();
+			left = (ArrayList<T>) f1.get();
+			right = (ArrayList<T>) f2.get();
 
 		} catch (Exception e) {
 			e.printStackTrace();

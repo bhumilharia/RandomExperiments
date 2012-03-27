@@ -1,4 +1,11 @@
+# Files to be ignored in the entire Repo.
+# Note- Since this repo is a collection of projects,
+# each project has a .gitignore in its own root folder 
 
-# files to be ignored
-
+# Folders #
 .metadata
+
+# Compiled source #
+*.com
+*.class
+

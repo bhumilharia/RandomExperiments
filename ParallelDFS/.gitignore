@@ -1,0 +1,9 @@
+# Files to be ignored in the ParallelDFS project.
+
+# Folders #
+bin/*
+
+# Compiled source #
+*.com
+*.class
+
