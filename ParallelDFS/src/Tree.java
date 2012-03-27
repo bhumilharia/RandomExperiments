@@ -1,12 +1,20 @@
 import java.util.*;
 
+/**
+ * @author Bhumil Haria
+ * 
+ *         This class is an implementation of a generic binary tree
+ * 
+ * @param <T>
+ *            The type of data that each Node of the tree stores
+ */
 public class Tree<T> {
 
 	/**
-	 * The Node object representing the root node of the tree 
+	 * The Node object representing the root node of the tree
 	 */
-	private Node<T> root;	
-	
+	private Node<T> root;
+
 	/**
 	 * Default constructor
 	 */
@@ -26,16 +34,23 @@ public class Tree<T> {
 	/**
 	 * Sets the root node of the calling Tree object
 	 * 
-	 * @param treeRoot the node to be set as the root of tree
+	 * @param treeRoot
+	 *            the node to be set as the root of tree
 	 */
 	public void setRoot(Node<T> treeRoot) {
 		root = treeRoot;
 	}
 
+	/**
+	 * Returns True if the tree is empty, False otherwise.
+	 * 
+	 * @return True if the tree is empty, False otherwise.
+	 */
 	public boolean isEmpty() {
 		return (root == null);
 	}
 
+	
 	public Tree<T> buildBinaryTree(ArrayList<T> list) {
 		// Creating a BST
 
@@ -45,8 +60,7 @@ public class Tree<T> {
 			T elem = (T) iter.next();
 			Node<T> root = new Node<T>(elem);
 			setRoot(root);
-		} 
-		catch (NoSuchElementException e) {
+		} catch (NoSuchElementException e) {
 			return null;
 		}
 
@@ -62,16 +76,17 @@ public class Tree<T> {
 	private void addNode(Node<T> parentNode, T elem) {
 
 		try {
-			// This will not work for any type except "int" 
-			// Only writing this for quick prototyping for creating BST with ints.
+			// This will not work for any type except "int"
+			// Only writing this for quick prototyping for creating BST with
+			// ints.
 			// TODO: change this build method into something generic
-			if ( Integer.parseInt(elem.toString()) <  Integer.parseInt(parentNode.getData().toString())) {
+			if (Integer.parseInt(elem.toString()) < Integer.parseInt(parentNode
+					.getData().toString())) {
 				if (parentNode.getLeftChild() == null)
 					parentNode.addLeftChild(new Node<T>(elem));
 				else
 					addNode(parentNode.getLeftChild(), elem);
-			} 
-			else {
+			} else {
 				if (parentNode.getRightChild() == null)
 					parentNode.addRightChild(new Node<T>(elem));
 				else
@@ -84,24 +99,20 @@ public class Tree<T> {
 
 	}
 
-	public ArrayList<T> parallelDFSTraverse(){
-		
+	public ArrayList<T> parallelDFSTraverse() {
+
 		ArrayList<T> traversalResult = new ArrayList<T>();
+		ParallelDFTraverser<T> traverser = new ParallelDFTraverser<T>(root);
 		
-		// TODO : change name from 'runner' to something better
-		
-		// Start
-		MyCallableClass<T> runner = new MyCallableClass<T>(root);		
-		try{
-			traversalResult = (ArrayList<T>) runner.call();
+		try {
+			traversalResult = (ArrayList<T>) traverser.call();
+		} catch (Exception e) {
 		}
-		catch(Exception e){
-		}
-		
+
 		// Shutdown executor
-		MyCallableClass.executor.shutdown();
-		
-		//System.out.println("Exit: parallel DFS traverse");		
+		traverser.destroyTraverser(true);
+
+		// System.out.println("Exit: parallel DFS traverse");
 		return traversalResult;
 	}
 
