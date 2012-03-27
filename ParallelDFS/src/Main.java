@@ -31,7 +31,7 @@ public class Main {
 		list.add(9);
 		
 		Tree<Integer> tree = new Tree<Integer>();
-		tree.buildBinaryTree(list);
+		tree = Tree.buildBinaryTree(list);
 		
 		// Running multiple times for verification (to check if parallelism affects order of the output) 
 		for(int i = 1; i< 11; i++){

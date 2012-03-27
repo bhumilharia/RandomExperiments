@@ -49,28 +49,26 @@ public class Tree<T> {
 	public boolean isEmpty() {
 		return (root == null);
 	}
-
 	
-	public Tree<T> buildBinaryTree(ArrayList<T> list) {
+	public static<T> Tree<T> buildBinaryTree(ArrayList<T> list) {
 		// Creating a BST
-
-		ListIterator<T> iter = list.listIterator();
+		
+		ListIterator<T> iter = list.listIterator();		
+		Tree<T> tree = new Tree<T>(); 
 
 		try {
 			T elem = (T) iter.next();
-			Node<T> root = new Node<T>(elem);
-			setRoot(root);
+			Node<T> rt = new Node<T>(elem);
+			tree.setRoot(rt); 
 		} catch (NoSuchElementException e) {
 			return null;
 		}
 
-		Node<T> parentNode = root;
-
 		while (iter.hasNext()) {
 			T elem = (T) iter.next();
-			this.addNode(parentNode, elem);
+			tree.addNode(tree.getRoot(), elem);
 		}
-		return this;
+		return tree;
 	}
 
 	private void addNode(Node<T> parentNode, T elem) {
@@ -92,7 +90,6 @@ public class Tree<T> {
 				else
 					addNode(parentNode.getRightChild(), elem);
 			}
-
 		} catch (Exception e) {
 			// Do nothing
 		}
