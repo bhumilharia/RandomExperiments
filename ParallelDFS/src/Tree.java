@@ -101,16 +101,13 @@ public class Tree<T> {
 		ArrayList<T> traversalResult = new ArrayList<T>();
 		ParallelDFTraverser<T> traverser = new ParallelDFTraverser<T>(root);
 		
-		try {
-			traversalResult = (ArrayList<T>) traverser.call();
-		} catch (Exception e) {
-		}
+		traversalResult = (ArrayList<T>) traverser.call();
 
 		// Shutdown executor
 		traverser.destroyTraverser(true);
 
 		// System.out.println("Exit: parallel DFS traverse");
-		return traversalResult;
+		return traversalResult;	
 	}
 
 }

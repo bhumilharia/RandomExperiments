@@ -16,8 +16,8 @@ import java.util.concurrent.TimeUnit;
  * @param <T>
  *            The type of data that the traversed Tree stores in each Node
  */
-@SuppressWarnings("rawtypes")
-public class ParallelDFTraverser<T> implements Callable {
+
+public class ParallelDFTraverser<T> implements Callable<ArrayList<T>> {
 
 	private Node<T> node;
 	private ArrayList<T> traversalResult;
@@ -140,7 +140,7 @@ public class ParallelDFTraverser<T> implements Callable {
 	}
 
 	@Override
-	public Object call() throws Exception {
+	public ArrayList<T> call(){
 		traversalResult = auxParallelDFSTraverse();
 		return traversalResult;
 	}
@@ -151,7 +151,6 @@ public class ParallelDFTraverser<T> implements Callable {
 	 * @return an ArrayList object with traversalResult of the subtree which has
 	 *         this.node as root.
 	 */
-	@SuppressWarnings({ "unchecked" })
 	private ArrayList<T> auxParallelDFSTraverse() {
 
 		if (node == null)
@@ -163,14 +162,14 @@ public class ParallelDFTraverser<T> implements Callable {
 		ArrayList<T> right = new ArrayList<T>();
 
 		// Left node subtree thread
-		ParallelDFTraverser worker1 = new ParallelDFTraverser(
+		ParallelDFTraverser<T> worker1 = new ParallelDFTraverser<T>(
 				node.getLeftChild());
-		Future f1 = executor.submit(worker1);
+		Future<ArrayList<T>> f1 = executor.submit(worker1);
 
 		// Right node subtree thread
-		ParallelDFTraverser worker2 = new ParallelDFTraverser(
+		ParallelDFTraverser<T> worker2 = new ParallelDFTraverser<T>(
 				node.getRightChild());
-		Future f2 = executor.submit(worker2);
+		Future<ArrayList<T>> f2 = executor.submit(worker2);
 
 		// Get Left and right subtree traversals
 		try {
